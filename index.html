@@ -13,8 +13,6 @@
   <!-- <script src="./assets/js/popper.min.js"></script>
   <script src="./assets/js/bootstrap.min.js"></script> -->
 </head>
-
-<>
   <!-- Navbar/Header Section Starts -->
   <section>
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color:#103076;">
@@ -96,7 +94,27 @@
         <div class="col-md-2 mb-2">
           <div class="form-group has-icon">
             <span class="fa fa-user-friends form-control-feedback" style="font-size: 11px;"></span>
-            <button class="form-control dropdown-toggle">&nbsp; Price Range &nbsp;</button>
+            <button class="form-control dropdown-toggle" id="price-range" data-bs-toggle="dropdown">&nbsp; Price Range &nbsp;</button>
+            <div class="dropdown-menu wrapper">
+              <div class="values">
+                <span>Price Range :: </span>
+                <span id="range1">
+                  0
+                </span>
+                <span> &dash; </span>
+                <span id="range2">
+                  100000
+                </span>
+              </div>
+              <div class="slider-container">
+                <div class="slider-track"></div>
+                <input type="range" min="0" max="100000" value="3000" id="slider-1" oninput="slideOne()">
+                <input type="range" min="0" max="100000" value="70000" id="slider-2" oninput="slideTwo()">
+              </div>
+              <!-- <div class="modal-footer"> -->
+                <button class="btn btn-primary float-end" onclick="setSliderValue();">Apply</button>
+              <!-- </div> -->
+            </div>
           </div>
         </div>
         <div class="col-md-2 mb-2">
@@ -457,19 +475,19 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title">Number of Guests</h5>
+          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
         </div>
         <div class="modal-body">
           <div class="container">
             <div class="row">
-              <div class="col-md-3">
-                <button class="btn btn-primary btn-circle" id="guestAdd" onclick="decrement();"><i class="fas fa-minus"></i></button>
+              <div class="col">
+                <button class="btn btn-primary btn-circle float-end" id="guestAdd" onclick="decrement();"><i class="fas fa-minus"></i></button>
               </div>
-              <div class="col-md-6">
-                <span class="text-center" id="guests">0</span>
+              <div class="col text-center">
+                <span id="guests">0</span>
               </div>
-              <div class="col-md-3">
+              <div class="col">
                 <button class="btn btn-primary btn-circle" id="guestMinus" onclick="increment();"><i class="fas fa-plus"></i></button>
               </div>
             </div>
@@ -507,13 +525,52 @@
 
     function guestUpdate() {
       var value = parseInt(document.getElementById("guests").innerText);
-      document.getElementById("totalGuests").innerHTML = "Guests = " + value;
+      document.getElementById("totalGuests").innerHTML = value;
     }
   </script>
 
   <script>
     var check_in = new HotelDatepicker(document.getElementById("check-in"));
       console.log(check_in);
+  </script>
+
+  <script>
+    window.onload = function () {
+        slideOne();
+        slideTwo();
+      }
+
+      let sliderOne = document.getElementById("slider-1");
+      let sliderTwo = document.getElementById("slider-2");
+      let displayValOne = document.getElementById("range1");
+      let displayValTwo = document.getElementById("range2");
+      let minGap = 10000;
+      let sliderTrack = document.querySelector(".slider-track");
+      let sliderMaxValue = document.getElementById("slider-1").max;
+
+      function slideOne() {
+        if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
+          sliderOne.value = parseInt(sliderTwo.value) - minGap;
+        }
+        displayValOne.textContent = sliderOne.value + " ৳ ";
+        fillColor();
+      }
+      function slideTwo() {
+        if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
+          sliderTwo.value = parseInt(sliderOne.value) + minGap;
+        }
+        displayValTwo.textContent = sliderTwo.value + " ৳ ";
+        fillColor();
+      }
+      function fillColor() {
+        percent1 = (sliderOne.value / sliderMaxValue) * 100;
+        percent2 = (sliderTwo.value / sliderMaxValue) * 100;
+        sliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}% , #3264fe ${percent1}% , #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
+      }
+
+      function setSliderValue() {
+        document.getElementById("price-range").innerHTML = sliderOne.value + " ৳ " + " - " + sliderTwo.value + " ৳ ";
+      }
   </script>
 
 </body>
