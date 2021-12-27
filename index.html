@@ -78,7 +78,7 @@
           <form autocomplete="off">
           <div class="form-group has-icon">
             <span class="fas fa-map-marker-alt form-control-feedback" style="font-size: 11px;"></span>
-            <input type="text" id="location" class="form-control" onkeyup="check_length(this.value);"placeholder="Search for location">
+            <input type="text" id="location" class="form-control" oninput="check_length(this.value);"placeholder="Search for location">
           </div>
           <ul class="list"></ul>
           </form>
@@ -130,7 +130,7 @@
         <div class="col-md-2 mb-2">
           <div class="form-group">
             <!-- <span class="fa fa-search form-control-feedback" style="font-size: 11px;"></span> -->
-            <button class="form-control" onclick="showData();">&nbsp; Search &nbsp;</button>
+            <button class="form-control" data-bs-toggle="modal" data-bs-target="#informationModal">&nbsp; Search &nbsp;</button>
           </div>
         </div>
       </div>
@@ -512,6 +512,36 @@
   </div>
   <!-- Guest Modal Ends -->
 
+
+  <!-- Informatin Submission Modal Starts -->
+  <div class="modal fade" id="informationModal" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Form Information</h5>
+          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">
+                <span id="selected-location"></span>
+                <span id="selected-date"></span>
+                <span id="selected-guests"></span>
+                <span id="selected-price"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Information Submission Modal Ends -->
+
   <script src="./assets/font-awesome/js/all.min.js"></script>
   <script src="./assets/js/popper.min.js"></script>
   <script src="./assets/js/bootstrap.min.js"></script>
@@ -584,14 +614,6 @@
   </script>
 
   <script type="text/javascript">
-
-    // window.onload = function() {
-    //   check_length(str);
-    //   removeElements();
-      
-    // };
-
-    
 
     const data = [
       { "id": 503358, "Name": "Province of Ragusa, Sicily, Italy", "Count": 51, "SlashName": "italy\/sicily\/province-of-ragusa-vacation-rentals\/g100503358" }, 
@@ -682,6 +704,8 @@
           if (str.length >= 3) {
             console.log(str);
             generateSuggestion(str);
+          } else {
+            removeElements();
           }
         }
   </script>
@@ -689,6 +713,8 @@
   <script>
     function showData() {
       window.alert(
+        document.getElementById("location").value, <br/>,
+        document.getElementById("check-in").value,
 
       );
     }
