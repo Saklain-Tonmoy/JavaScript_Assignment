@@ -198,4 +198,24 @@ input[type="range"]:active::-webkit-slider-thumb{
     right: 0;
 }
 
-.modal-footer {border:none;}
+.modal-footer {
+    border:none;
+}
+
+
+
+/* Suggestion list CSS */
+ul {
+    list-style: none;
+}
+.list {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 0 0 5px 5px;
+}
+.list-items {
+  padding: 10px 5px;
+}
+.list-items:hover {
+  background-color: #dddddd;
+}
